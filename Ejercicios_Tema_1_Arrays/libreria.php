@@ -175,3 +175,100 @@ if (isset($_POST['mosca'])){
 
 
 */
+
+
+
+#Buscaminas
+
+function generarTablero($n, $b){
+    $tablero = devolverArrayConTamanio($n);
+    rellenarTablero($tablero, $b);
+    formatearCasillas($tablero);
+    return $tablero;
+}
+
+function rellenarTablero(&$tablero, $b){
+    $c = 0;
+    while($b>$c){
+        $numeroRandom = rand(0, count($tablero) -1);
+        $colocada= false;
+        while(!$colocada){
+            if($tablero[$numeroRandom]!=9){
+                $colocada = true;
+                $tablero[$numeroRandom]=9;
+            }
+            else{
+                $numeroRandom++;
+                if($numeroRandom>=count($tablero)){
+                    $numeroRandom=0;
+                }
+            }
+        }
+        $c++;
+    }
+
+
+}
+
+function formatearCasillas(&$tablero){
+    foreach($tablero as $key => $valor){
+        if($valor != 9){
+            $minasAdyacentes = 0;
+
+            if($key > 0 && $tablero[$key - 1] == 9){//izquierda
+                $minasAdyacentes++;
+            }
+            if($key < count($tablero) - 1 && $tablero[$key + 1] == 9){//derecha
+                $minasAdyacentes++;
+            }
+           
+            $tablero[$key] = $minasAdyacentes;
+        }
+    }
+}
+
+
+function printear_tablero($tablero){
+    
+    foreach($tablero as $key => $valor){
+        echo '[_]';
+        
+    }
+    echo '<br>';
+}
+
+function printear_tablero2($tablero){
+    
+    foreach($tablero as $key => $valor){
+        echo '[';
+        if($valor ==9){
+            echo '*';
+        }
+        else{
+            echo $valor;
+        }
+        echo ']';
+    }
+    echo '<br>';
+}
+
+function printear_tabero_casilla($tablero,$casilla){
+    
+    foreach($tablero as $key => $valor){
+        echo '[';
+        if($casilla == $key){
+            if($valor ==9){
+                echo '*';
+            }
+            else{
+                echo $valor;
+            }
+        }
+        else{
+            echo '_';
+        }
+
+        echo ']';
+    }
+    echo '<br>';
+}

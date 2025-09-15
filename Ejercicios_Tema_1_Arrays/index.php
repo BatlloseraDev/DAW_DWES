@@ -275,6 +275,61 @@ if (isset($_POST['mosca'])){
 */ 
 ?>
 
+<?php
+#------------------BUSCAMINAS-----------------
+
+echo '<h1>Buscaminas</h1><br>';
+
+/*
+Realizaremos el juego del buscaminas con un vector. Para aquellos que no hayan
+jugado nunca (ni siquiera mientras estoy explicando algo) os recuerdo que el juego
+consiste en destapar todas las casillas de un vector menos las minas; si pisamos una
+mina el juego acaba y hemos perdido.
+El juego nos proporcionará pistas, de forma que si destapamos una casilla y no hay una
+mina, esta casilla nos indicará cuantas minas hay adyacentes a esa posición.
+Por lo tanto el ordenador debe preparar un panel de 20 casillas para nosotros en el
+que colocará 6 minas y las pistas correspondientes.
+*/
+if($_SERVER['REQUEST_METHOD']=='GET'){
+    
+    if($parametros[1]=='buscaminas_tablero'){
+       if(count($parametros)== 3){
+            if($parametros[2]<$parametros[3]){
+                echo 'No puede haber más minas que casillas<br>';
+            }
+            else{
+                $tablero = generarTablero($parametros[2],$parametros[3]);//n es tamanio y b es minas
+                echo 'tablero creado:<br>';
+                printear_tablero($tablero);
+            }
+       }
+       else{
+            echo 'Fallo en la cantidad de parametros<br>';
+       }
+    }
+    else if($parametros[1]=='buscaminas_destapar'){
+        if(count($parametros)== 2){
+            $tamanio = 10;
+            $bombas = 3;
+            $tablero = generarTablero($tamanio, $bombas);
+            echo 'Resultado de la posición escogida:<br>';
+            printear_tabero_casilla($tablero, $parametros[2]);
+        }else{
+            echo 'Fallo en la cantidad de parametros<br>';
+        }
+    }
+    else {
+        echo 'ejemplo1: ...../buscaminas_tablero/10/9<br>';
+        echo 'ejemplo2: ...../buscaminas_destapar/3<br>';
+    }
+}
+
+
+
+
+
+?>
+
 
 
 
