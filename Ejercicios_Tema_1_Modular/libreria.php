@@ -63,8 +63,8 @@ function paresImpares($num){
     $pares = 0;
     $impares = 0;
     while($num >=1 ){
-        $num= $num/10;
         $resto= $num%10;
+        $num= $num/10;
         if($resto%2==0){
             $pares++;
         }

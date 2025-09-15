@@ -112,15 +112,66 @@ function comprobarMosca ($n,$t){
         else{
         #dentro de la array
        
-            if($comprobarPosicion($n-1,$t)||$comprobarPosicion($n+1,$t)) $resultado= 2;
-            
+            if($comprobarPosicion($n-1,$t)||$comprobarPosicion($n+1,$t)) $resultado= 2;    
         }
     }
    
     return $resultado;
 }
-/*
-function comprobar1Posicion ($n,$t){
-    return $t[$n]==1;
-}*/
 
+function devolverRespuesta($n,&$t){
+    #comprobar que sucedió 1= nada, 2= mosca asustada, 3= mosca atrapada
+    $resultado = comprobarMosca($n-1,$t); #Hago un -1 para igualarlo con el array
+    $devolverInfo = '';
+    if($resultado ==1){
+        $devolverInfo = 'No ha ocurrido nada<br>';
+    }
+    else if ($resultado == 2){
+        $devolverInfo = 'Has asustado a la mosca<br>';
+        colocarMosca($t);
+        #print_r($tablero); para comprobar cual es la nueva pos
+    }
+    else if ($resultado == 3){
+        $devolverInfo = 'Has matado a la mosca<br>Juego reiniciado<br>';
+        colocarMosca($t);
+    }
+    else{
+        $devolverInfo= 'Sucedió algo inesperado<br>';
+    }
+    return $devolverInfo;
+}
+/*
+if (!isset($_SESSION['tablero'])) {
+    $_SESSION['tablero'] = devolverArrayConTamanio(9);
+    colocarMosca($_SESSION['tablero']);
+}
+$tablero = $_SESSION['tablero'];
+#print_r($tablero); para ver la posicion y probar
+echo '<br>';
+
+if (isset($_POST['mosca'])){
+    $numero = $_POST['mosca'];
+    #comprobar que sucedió 1= nada, 2= mosca asustada, 3= mosca atrapada
+   
+    $resultado = comprobarMosca($numero-1,$tablero);
+    if($resultado ==1){
+        echo 'No ha ocurrido nada<br>';
+    }
+    else if ($resultado == 2){
+        echo 'Has asustado a la mosca<br>';
+        colocarMosca($tablero);
+        $_SESSION['tablero'] = $tablero;
+        #print_r($tablero); para comprobar cual es la nueva pos
+    }
+    else if ($resultado == 3){
+        echo 'Has matado a la mosca<br>';
+        unset($_SESSION['tablero']);
+        echo 'Juego reiniciado';
+    }
+
+}else{
+    echo 'Aun no has introducido un número';
+}
+
+
+*/

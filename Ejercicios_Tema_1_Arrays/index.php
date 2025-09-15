@@ -1,6 +1,11 @@
 <?php
-session_start();
+
+
 require ('./libreria.php');
+$parametros = explode('/', $_SERVER["REQUEST_URI"]);
+unset($parametros[0]);
+
+
 
 #-------------Ejercicio 5-----------------
 /*
@@ -16,6 +21,25 @@ $vector5_2 = contarPositivosNegativos($vector5);
 print_r($vector5);
 
 echo '<br>Hay '.$vector5_2[0].' números positivos y '.$vector5_2[1].' números negativos.<br>';
+#Con URL
+echo 'Con URL<br>';
+if($_SERVER['REQUEST_METHOD']=='GET'){
+    if($parametros[1]=='posNeg'){
+        if(count($parametros)==2){
+            $cantidad = $parametros[2];
+            $vector5= generarArrayAleatorio($cantidad);
+            $vector5_2 = contarPositivosNegativos($vector5);
+            print_r($vector5);
+            echo '<br>Hay '.$vector5_2[0].' números positivos y '.$vector5_2[1].' números negativos.<br>';
+        }
+        
+        else{
+            echo 'Fallo en la cantidad de parametros';
+        }
+    }else{
+        echo 'ejemplo: ...../posNeg/5<br>';
+    }
+}
 
 
 
@@ -29,9 +53,30 @@ es decir, que el segundo array deberá tener los valores {5,4,3,2,1}.
 echo '<h1>Ejercicio 8</h1><br>';
 
 $array8 = [1,2,3,4,5];
-
 $array8_2 = revertirArray($array8);
 print_r($array8_2);
+echo '<br>';
+
+
+#con URL
+echo 'Con URL<br>';
+if($_SERVER['REQUEST_METHOD']=='GET'){
+    if($parametros[1]=='revertir'){
+        if(count($parametros)==2){
+            $numero = $parametros[2];
+            $array8 = str_split($numero);
+            $array8_2 = revertirArray($array8);
+            print_r($array8_2);
+        }
+        
+        else{
+            echo 'Fallo en la cantidad de parametros';
+        }
+    }else{
+        echo 'ejemplo: ...../revertir/12345<br>';
+    }
+}
+
 
 
 #-----------Ejercicio 9-----------------
@@ -44,13 +89,48 @@ Utiliza vectores para resolver el problema.
 
 echo '<h1>Ejercicio 9</h1><br>';
 ?>
+
+<!-- METODO CON POST
 <form method="post">
     <p>Ingresa un número en la caja de abajo</p>
     <input type="number" id="ejercicio9" name="ejercicio9" required>
     <button  type="submit">Comprobar capicúa</button>
 </form>
+-->
+
 
 <?php
+echo '¿el número 34543 es capicúa?<br>';
+if (comprobarCapicua(34543)){
+    echo 'El número es capicúa<br>';
+}else{
+    echo 'El número no es capicúa<br>';
+}
+echo 'Con URL<br>';
+
+
+if($_SERVER['REQUEST_METHOD']=='GET'){
+    if($parametros[1]=='capicua'){
+        if(count($parametros)==2){
+            if(comprobarCapicua($parametros[2])){
+                echo 'El número '.$parametros[2].' es capicúa<br>';
+            }
+            else{
+                echo 'El número '.$parametros[2].' no es capicúa<br>';
+            }
+        }
+        
+        else{
+            echo 'Fallo en la cantidad de parametros';
+        }
+    }else {
+        echo 'ejemplo: ...../capicua/34543<br>';
+    }
+}
+
+
+
+/* metodo con post
 if (isset($_POST['ejercicio9'])){
     $numero = $_POST['ejercicio9'];
     $resultado= comprobarCapicua( $numero);
@@ -60,8 +140,12 @@ if (isset($_POST['ejercicio9'])){
 }else{
     echo 'Aun no has introducido un número';
 }
+*/ 
+
+?>
 
 
+<?php
 #-----------La mosca Gao-----------------
 /*
 Vamos a intentar cazar una mosca. La mosca será un valor que se introduce en una
@@ -84,14 +168,79 @@ el juego termina cuando haya usted matado a la mosca y se reiniciará automatica
     [ ] [ ] [ ] [ ] [ ] [ ] [ ] [ ] [ ]
      1   2   3   4   5   6   7   8   9
 </pre>
+<!-- Metodo con POST
 <form method="post">
     <p>Ingresa un número en la caja de abajo del 1 al 9</p>
     <input type="number" id="mosca" name="mosca" min="1" max="9" required>
     <button  type="submit">Comprobar resultado</button>
 </form>
-
+-->
+<p>Ingresa un número en la caja de abajo del 1 al 9</p>
 <?php
+echo 'En este caso simulo que le he puesto 5<br>';
+$tamanio = 9;
+$posicion = 5;
+$tablero = devolverArrayConTamanio($tamanio);
+colocarMosca($tablero);
+print_r($tablero);
+echo '<br>';
+echo 'El resultado para la posicion '.$posicion.' es: '.devolverRespuesta($posicion, $tablero);
 
+#con URL
+echo 'Con URL<br>';
+
+if($_SERVER['REQUEST_METHOD']=='GET'){
+    if($parametros[1]=='mosca_tablero'){
+        if(count($parametros)==2){
+            $tamanio = $parametros[2];
+            $tablero = devolverArrayConTamanio($tamanio);
+            echo 'tablero creado:<br>';
+            print_r($tablero);
+            echo '<br>';
+        }
+        
+        else{
+            echo 'Fallo en la cantidad de parametros';
+        }
+    }
+    else if($parametros[1]=='mosca_colocar'){
+        if(count($parametros)==1){
+            $tamanio = 9;
+            $tablero = devolverArrayConTamanio($tamanio);
+            colocarMosca($tablero);
+            echo 'mosca colocada:<br>';
+            print_r($tablero);
+            echo '<br>';
+        }
+        
+        else{
+            echo 'Fallo en la cantidad de parametros';
+        }
+    }
+    else if($parametros[1]=='mosca_jugar'){
+        if(count($parametros)==2){
+            $tamanio = 9;
+            $tablero = devolverArrayConTamanio($tamanio);
+            colocarMosca($tablero);
+            $posicion = $tablero[2];
+            print_r($tablero);
+            echo 'resultado del intento<br>';
+            echo 'El resultado para la posicion '.$posicion.' es: '.devolverRespuesta($posicion, $tablero);
+        }
+        else{
+            echo 'Fallo en la cantidad de parametros';
+        }
+    }
+    else {
+        echo 'ejemplo1: ...../mosca_tablero/10<br>';
+        echo 'ejemplo2: ...../mosca_colocar/<br>';
+        echo 'ejemplo3: ...../mosca_jugar/5<br>';
+    }
+}
+
+
+
+/* Metodo con Post
 if (!isset($_SESSION['tablero'])) {
     $_SESSION['tablero'] = devolverArrayConTamanio(9);
     colocarMosca($_SESSION['tablero']);
@@ -123,7 +272,7 @@ if (isset($_POST['mosca'])){
 }else{
     echo 'Aun no has introducido un número';
 }
-
+*/ 
 ?>
 
 
