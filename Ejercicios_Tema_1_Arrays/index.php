@@ -313,7 +313,7 @@ if($_SERVER['REQUEST_METHOD']=='GET'){
             $bombas = 3;
             $tablero = generarTablero($tamanio, $bombas);
             echo 'Resultado de la posición escogida:<br>';
-            printear_tabero_casilla($tablero, $parametros[2]);
+            printear_tabero_casilla($tablero, $parametros[2]-1);
         }else{
             echo 'Fallo en la cantidad de parametros<br>';
         }
