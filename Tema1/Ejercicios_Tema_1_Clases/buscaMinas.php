@@ -61,7 +61,10 @@ class buscaMinas{
 }
 
 class BuilderBuscaMinas{
-
+    
+    private $tableroInic;
+    
+    /*
     private $tamanio= 9;
     private $bombas=3;
 
@@ -121,7 +124,17 @@ class BuilderBuscaMinas{
         $this->colocarBombas($tableroInicial);
         $this->formatearCasillas($tableroInicial);
         return new buscaMinas($tableroInicial);
+    }*/
+
+    public function setTableroInic($tableroInic)
+    {
+        $this->tableroInic = $tableroInic;
+
+        return $this;
     }
 
-
+    public function Build()
+    {
+        return new buscaMinas($this->tableroInic);
+    }
 }

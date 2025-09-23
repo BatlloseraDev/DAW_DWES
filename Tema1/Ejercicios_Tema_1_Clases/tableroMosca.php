@@ -89,7 +89,11 @@ class TableroMosca{
 
 
 class BuilderTableroMosca{
-    private $tamanio;
+    
+    private $tableroInic;
+    
+    
+    /*private $tamanio;
 
 
     public function setTamanio(int $tamanio)
@@ -104,5 +108,16 @@ class BuilderTableroMosca{
         
         $tableroInicial = array_fill(0, $this->tamanio, 0);
         return new TableroMosca($tableroInicial);
+    }*/
+
+    public function setTableroInic($tableroInic)
+    {
+        $this->tableroInic = $tableroInic;
+
+        return $this;
+    }
+
+    public function build(){
+        return new TableroMosca($this->tableroInic);
     }
 }
