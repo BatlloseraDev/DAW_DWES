@@ -1,7 +1,7 @@
 <?php
 
-require_once('./personaDAOImpl.php');
-require_once('./persona.php');
+require_once('./DataBases/personaDAOImpl.php');
+require_once('./Model/persona.php');
 // require_once("./personaDAO.php");
 // require_once("../Utilidades/conexionDB.php");
 // require_once("../Utilidades/sql_preparados.php");

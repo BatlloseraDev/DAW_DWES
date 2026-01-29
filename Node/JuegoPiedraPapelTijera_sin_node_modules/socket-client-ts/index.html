@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Piedra, Papel, Tijera - Node</title>
+    <link rel="stylesheet" href="./src/style.css">
+  </head>
+  <body>
+    <div id="app">
+      <h1>🪨 📄 ✂️ Piedra, Papel, Tijera</h1>
+
+      <div id="login-section">
+        <h2>Acceso</h2>
+        <input type="text" id="email-input" placeholder="Email" value="anom@anom.com"  />
+        <input type="password" id="password-input" placeholder="Contraseña"  value="anom"/>
+        <div style="margin-top: 10px;">
+          <input type="text" id="name-input" placeholder="Nombre (solo registro)" />
+        </div>
+        <br>
+        <button id="btn-login">Login</button>
+        <button id="btn-register">Registrarse</button>
+        <p id="login-error" style="color: red;"></p>
+      </div>
+
+      <div id="lobby-section" class="hidden">
+        <h2>Bienvenido, <span id="username-display"></span></h2>
+        
+        <div class="lobby-controls">
+          <button id="btn-create-human">Crear Partida (vs Humano)</button>
+          <button id="btn-create-cpu" style="background-color: #e91e63;">🤖 Crear Partida (vs CPU)</button>
+          <button id="btn-refresh-ranking">Actualizar Ranking</button>
+        </div>
+
+        <div style="display: flex; gap: 20px; margin-top: 20px;">
+          <div style="flex: 1; border: 1px solid #ccc; padding: 10px;">
+            <h3>Partidas Disponibles</h3>
+            <ul id="games-list">
+              <li>Esperando partidas...</li>
+            </ul>
+          </div>
+
+          <div style="flex: 1; border: 1px solid #ccc; padding: 10px;">
+            <h3>Ranking Top Jugadores</h3>
+            <ol id="ranking-list">
+              </ol>
+          </div>
+        </div>
+      </div>
+
+      <div id="game-section" class="hidden">
+        <h2 id="game-status">En juego...</h2>
+        <h3 id="round-info">Ronda 1</h3>
+        
+        <div class="game-area">
+          <div class="player-zone">
+            <h4 id="creator-text">tú</h4>
+            <div id="my-move" class="move-placeholder">?</div>
+          </div>
+          <div class="vs">VS</div>
+          <div class="player-zone">
+            <h4 id="opponent-text">Oponente</h4>
+            <div id="opponent-move" class="move-placeholder">?</div>
+          </div>
+        </div>
+
+        <div class="controls" id="game-controls">
+          <button class="btn-move" data-move="rock">🪨 Piedra</button>
+          <button class="btn-move" data-move="paper">📄 Papel</button>
+          <button class="btn-move" data-move="scissors">✂️ Tijera</button>
+        </div>
+
+        <button id="btn-leave" style="background-color: #ff4444; margin-top: 20px;">Abandonar Partida</button>
+      </div>
+
+    </div>
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>
